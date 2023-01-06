@@ -16,6 +16,7 @@ function addBookToLibrary(e) {
   bookCount++;
   hideInputForm();
   clearInputForm();
+  displayBooks();
 }
 
 function showInputForm() {
@@ -28,6 +29,22 @@ function hideInputForm() {
 
 function clearInputForm() {
   document.getElementById("popUp").reset();
+}
+
+function displayBooks() {
+  const main = document.querySelector("main");
+  let lastBookAdded = myLibrary[myLibrary.length - 1];
+  let bookContainer = document.createElement("div");
+  let titleOfBook = document.createElement("div");
+  titleOfBook.textContent = lastBookAdded.title;
+  let authorOfBook = document.createElement("div");
+  authorOfBook.textContent = lastBookAdded.author;
+  let pagesOfBook = document.createElement("div");
+  pagesOfBook.textContent = lastBookAdded.pages;
+  bookContainer.appendChild(titleOfBook);
+  bookContainer.appendChild(authorOfBook);
+  bookContainer.appendChild(pagesOfBook);
+  main.appendChild(bookContainer);
 }
 
 const btnAddBook = document.querySelector("#btnBook");

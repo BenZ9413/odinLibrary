@@ -14,7 +14,7 @@
     </header>
     <main>
       <form id="popUp">
-        <div>Enter the book details</div>
+        <div>Book details</div>
         <label for="title">Title</label>
         <input
           type="text"
@@ -39,6 +39,17 @@
           id="pages"
           required
         />
+        <fieldset>
+          <legend>Read the book?</legend>
+          <div>
+            <input type="radio" name="readStatus" id="readStatusYes" />
+            <label for="readStatus">yes</label>
+          </div>
+          <div>
+            <input type="radio" name="readStatus" id="readStatusNo" />
+            <label for="readStatus">no</label>
+          </div>
+        </fieldset>
         <button id="btnSubmit" type="submit">Submit</button>
       </form>
     </main>

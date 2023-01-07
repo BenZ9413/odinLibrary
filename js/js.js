@@ -41,6 +41,7 @@ function displayBooks() {
   const main = document.querySelector("main");
   let lastBookAdded = myLibrary[myLibrary.length - 1];
   let bookContainer = document.createElement("div");
+  bookContainer.setAttribute("data", lastBookAdded.bookReference);
   let titleOfBook = document.createElement("div");
   titleOfBook.textContent = lastBookAdded.title;
   let authorOfBook = document.createElement("div");
@@ -49,11 +50,32 @@ function displayBooks() {
   pagesOfBook.textContent = lastBookAdded.pages;
   let readStatusOfBook = document.createElement("div");
   readStatusOfBook.textContent = lastBookAdded.readStatus;
+  let btnDelete = document.createElement("button");
+  btnDelete.textContent = "delete";
+  btnDelete.addEventListener("click", (e) => deleteBook(e));
   bookContainer.appendChild(titleOfBook);
   bookContainer.appendChild(authorOfBook);
   bookContainer.appendChild(pagesOfBook);
   bookContainer.appendChild(readStatusOfBook);
+  bookContainer.appendChild(btnDelete);
   main.appendChild(bookContainer);
+}
+
+function deleteBook(e) {
+  const bookToDelete = e.target.parentNode;
+  const bookToDeleteReference = bookToDelete.getAttribute("data");
+  let bookPositionInLibrary = 0;
+  bookToDelete.parentNode.removeChild(bookToDelete);
+  for (let book in myLibrary) {
+    console.log(myLibrary[book].bookReference);
+    if (myLibrary[book].bookReference == bookToDeleteReference) {
+      myLibrary.splice(bookPositionInLibrary, 1);
+      console.log(myLibrary);
+      return;
+    } else {
+      bookPositionInLibrary++;
+    }
+  }
 }
 
 const btnAddBook = document.querySelector("#btnBook");

@@ -18,7 +18,6 @@ function addBookToLibrary(e) {
   myLibrary[myLibrary.length - 1].readStatus = document.querySelector(
     "input[name='readStatus']:checked"
   ).value;
-  console.log(myLibrary);
   bookCount++;
   hideInputForm();
   clearInputForm();
@@ -67,10 +66,8 @@ function deleteBook(e) {
   let bookPositionInLibrary = 0;
   bookToDelete.parentNode.removeChild(bookToDelete);
   for (let book in myLibrary) {
-    console.log(myLibrary[book].bookReference);
     if (myLibrary[book].bookReference == bookToDeleteReference) {
       myLibrary.splice(bookPositionInLibrary, 1);
-      console.log(myLibrary);
       return;
     } else {
       bookPositionInLibrary++;

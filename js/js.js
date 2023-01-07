@@ -3,6 +3,8 @@ let bookCount = 0;
 
 function Book() {}
 
+// Have to check if every field has been filled out with a function
+
 function addBookToLibrary(e) {
   e.preventDefault();
   myLibrary.push(new Book());
@@ -13,6 +15,10 @@ function addBookToLibrary(e) {
     document.querySelector("#author").value;
   myLibrary[myLibrary.length - 1].pages =
     document.querySelector("#pages").value;
+  myLibrary[myLibrary.length - 1].readStatus = document.querySelector(
+    "input[name='readStatus']:checked"
+  ).value;
+  console.log(myLibrary);
   bookCount++;
   hideInputForm();
   clearInputForm();

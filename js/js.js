@@ -47,9 +47,12 @@ function displayBooks() {
   authorOfBook.textContent = lastBookAdded.author;
   let pagesOfBook = document.createElement("div");
   pagesOfBook.textContent = lastBookAdded.pages;
+  let readStatusOfBook = document.createElement("div");
+  readStatusOfBook.textContent = lastBookAdded.readStatus;
   bookContainer.appendChild(titleOfBook);
   bookContainer.appendChild(authorOfBook);
   bookContainer.appendChild(pagesOfBook);
+  bookContainer.appendChild(readStatusOfBook);
   main.appendChild(bookContainer);
 }
 

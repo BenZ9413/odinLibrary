@@ -47,17 +47,43 @@ function displayBooks() {
   authorOfBook.textContent = lastBookAdded.author;
   let pagesOfBook = document.createElement("div");
   pagesOfBook.textContent = lastBookAdded.pages;
+  let readStatusContainer = document.createElement("div");
+  readStatusContainer.setAttribute("style", "display: flex");
   let readStatusOfBook = document.createElement("div");
   readStatusOfBook.textContent = lastBookAdded.readStatus;
+  let btnChangeReadStatus = document.createElement("button");
+  btnChangeReadStatus.textContent = "change";
+  btnChangeReadStatus.addEventListener("click", (e) =>
+    changeReadStatusOfBook(e)
+  );
   let btnDelete = document.createElement("button");
   btnDelete.textContent = "delete";
   btnDelete.addEventListener("click", (e) => deleteBook(e));
   bookContainer.appendChild(titleOfBook);
   bookContainer.appendChild(authorOfBook);
   bookContainer.appendChild(pagesOfBook);
-  bookContainer.appendChild(readStatusOfBook);
+  readStatusContainer.appendChild(readStatusOfBook);
+  readStatusContainer.appendChild(btnChangeReadStatus);
+  bookContainer.appendChild(readStatusContainer);
   bookContainer.appendChild(btnDelete);
   main.appendChild(bookContainer);
+}
+
+function changeReadStatusOfBook(e) {
+  const readStatusElement = e.target.previousElementSibling;
+  const bookToChangeReadStatusReference =
+    e.target.parentNode.parentNode.getAttribute("data");
+  for (let book in myLibrary) {
+    if (myLibrary[book].bookReference == bookToChangeReadStatusReference) {
+      if (myLibrary[book].readStatus == "yes") {
+        myLibrary[book].readStatus = "no";
+        readStatusElement.textContent = "no";
+      } else {
+        myLibrary[book].readStatus = "yes";
+        readStatusElement.textContent = "yes";
+      }
+    }
+  }
 }
 
 function deleteBook(e) {

@@ -41,22 +41,27 @@ function displayBooks() {
   let lastBookAdded = myLibrary[myLibrary.length - 1];
   let bookContainer = document.createElement("div");
   bookContainer.setAttribute("data", lastBookAdded.bookReference);
+  bookContainer.setAttribute("class", "book");
   let titleOfBook = document.createElement("div");
   titleOfBook.textContent = lastBookAdded.title;
+  titleOfBook.setAttribute("id", "bookHeader");
   let authorOfBook = document.createElement("div");
   authorOfBook.textContent = lastBookAdded.author;
   let pagesOfBook = document.createElement("div");
-  pagesOfBook.textContent = lastBookAdded.pages;
+  pagesOfBook.textContent = lastBookAdded.pages + " pages";
   let readStatusContainer = document.createElement("div");
   readStatusContainer.setAttribute("style", "display: flex");
+  readStatusContainer.setAttribute("class", "readStatusContainer");
   let readStatusOfBook = document.createElement("div");
-  readStatusOfBook.textContent = lastBookAdded.readStatus;
+  readStatusOfBook.textContent = "Read: " + lastBookAdded.readStatus;
   let btnChangeReadStatus = document.createElement("button");
+  btnChangeReadStatus.setAttribute("class", "btnChangeReadStatus");
   btnChangeReadStatus.textContent = "change";
   btnChangeReadStatus.addEventListener("click", (e) =>
     changeReadStatusOfBook(e)
   );
   let btnDelete = document.createElement("button");
+  btnDelete.setAttribute("class", "btnDelete");
   btnDelete.textContent = "delete";
   btnDelete.addEventListener("click", (e) => deleteBook(e));
   bookContainer.appendChild(titleOfBook);
@@ -77,10 +82,10 @@ function changeReadStatusOfBook(e) {
     if (myLibrary[book].bookReference == bookToChangeReadStatusReference) {
       if (myLibrary[book].readStatus == "yes") {
         myLibrary[book].readStatus = "no";
-        readStatusElement.textContent = "no";
+        readStatusElement.textContent = "Read: no";
       } else {
         myLibrary[book].readStatus = "yes";
-        readStatusElement.textContent = "yes";
+        readStatusElement.textContent = "Read: yes";
       }
     }
   }

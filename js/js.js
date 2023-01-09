@@ -3,10 +3,7 @@ let bookCount = 0;
 
 function Book() {}
 
-// Have to check if every field has been filled out with a function
-
-function addBookToLibrary(e) {
-  e.preventDefault();
+function addBookToLibrary() {
   myLibrary.push(new Book());
   myLibrary[myLibrary.length - 1].bookReference = bookCount;
   myLibrary[myLibrary.length - 1].title =
@@ -106,10 +103,31 @@ function deleteBook(e) {
   }
 }
 
+function formValidation(e) {
+  e.preventDefault();
+  if (
+    document.querySelector("#title").value == "" ||
+    document.querySelector("#author").value == ""
+  ) {
+    alert("Please fill in all the book details.");
+    return false;
+  } else if (
+    isNaN(document.querySelector("#pages").value) ||
+    document.querySelector("#pages").value == ""
+  ) {
+    alert("Please use only numbers for the page-input.");
+    return false;
+  } else {
+    return true;
+  }
+}
+
 const btnAddBook = document.querySelector("#btnBook");
 btnAddBook.addEventListener("click", () => showInputForm());
 
 const btnSubmit = document.querySelector("#btnSubmit");
 btnSubmit.addEventListener("click", (e) => {
-  addBookToLibrary(e);
+  if (formValidation(e)) {
+    addBookToLibrary();
+  }
 });

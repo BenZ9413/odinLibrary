@@ -74,7 +74,7 @@ footer {
 
 #btnSubmit {
   border: none;
-  background-color: #3c6255;
+  background-color: #61876e;
   border-radius: 10px;
   color: #eae7b1;
   font-weight: bold;
@@ -103,7 +103,7 @@ footer {
 }
 
 .btnChangeReadStatus {
-  background-color: #3c6255;
+  background-color: #61876e;
   color: #eae7b1;
   border-radius: 10px;
   border: none;
@@ -111,8 +111,19 @@ footer {
 
 .btnDelete {
   border: none;
-  background-color: #3c6255;
+  background-color: #61876e;
   border-radius: 10px;
   color: #eae7b1;
   font-weight: bold;
+}
+
+.btnDelete:hover,
+.btnChangeReadStatus:hover,
+#btnSubmit:hover {
+  background-color: #3c6255;
+}
+
+#btnBook:hover {
+  background-color: #61876e;
+  color: #eae7b1;
 }

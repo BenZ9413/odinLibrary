@@ -1,20 +1,26 @@
 let myLibrary = [];
 let bookCount = 0;
 
-function Book() {}
+class Book {
+  constructor(bookReference, title, author, pages, readStatus) {
+    (this.bookReference = bookReference),
+      (this.title = title),
+      (this.author = author),
+      (this.pages = pages),
+      (this.readStatus = readStatus);
+  }
+}
 
 function addBookToLibrary() {
-  myLibrary.push(new Book());
-  myLibrary[myLibrary.length - 1].bookReference = bookCount;
-  myLibrary[myLibrary.length - 1].title =
-    document.querySelector("#title").value;
-  myLibrary[myLibrary.length - 1].author =
-    document.querySelector("#author").value;
-  myLibrary[myLibrary.length - 1].pages =
-    document.querySelector("#pages").value;
-  myLibrary[myLibrary.length - 1].readStatus = document.querySelector(
-    "input[name='readStatus']:checked"
-  ).value;
+  myLibrary.push(
+    new Book(
+      bookCount,
+      document.querySelector("#title").value,
+      document.querySelector("#author").value,
+      document.querySelector("#pages").value,
+      document.querySelector("input[name='readStatus']:checked").value
+    )
+  );
   bookCount++;
   hideInputForm();
   clearInputForm();

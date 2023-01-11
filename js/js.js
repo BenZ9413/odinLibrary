@@ -9,35 +9,94 @@ class Book {
       (this.pages = pages),
       (this.readStatus = readStatus);
   }
+
+  addBookToLibrary = () => {
+    myLibrary.push(this);
+  };
 }
 
-function addBookToLibrary() {
-  myLibrary.push(
-    new Book(
-      bookCount,
-      document.querySelector("#title").value,
-      document.querySelector("#author").value,
-      document.querySelector("#pages").value,
-      document.querySelector("input[name='readStatus']:checked").value
-    )
-  );
+function createNewBook() {
+  let bookCountNow = bookCount;
   bookCount++;
-  hideInputForm();
-  clearInputForm();
-  displayBooks();
+  return new Book(
+    bookCountNow,
+    document.querySelector("#title").value,
+    document.querySelector("#author").value,
+    document.querySelector("#pages").value,
+    document.querySelector("input[name='readStatus']:checked").value
+  );
 }
 
-function showInputForm() {
-  document.getElementById("popUp").style.display = "flex";
+function findBookInLibrary(referenceOfBookToFind) {
+  for (let book in myLibrary) {
+    if (myLibrary[book].bookReference == referenceOfBookToFind) {
+      return book;
+    }
+  }
 }
 
-function hideInputForm() {
-  document.getElementById("popUp").style.display = "none";
+function changeReadStatusOfBook(e) {
+  const readStatusElement = e.target.previousElementSibling;
+  const bookToChangeReadStatus = findBookInLibrary(
+    e.target.parentNode.parentNode.getAttribute("data")
+  );
+  if (myLibrary[bookToChangeReadStatus].readStatus == "yes") {
+    myLibrary[bookToChangeReadStatus].readStatus = "no";
+    readStatusElement.textContent = "Read: no";
+  } else {
+    myLibrary[bookToChangeReadStatus].readStatus = "yes";
+    readStatusElement.textContent = "Read: yes";
+  }
 }
 
-function clearInputForm() {
-  document.getElementById("popUp").reset();
+function deleteBook(e) {
+  const bookToDeleteHtml = e.target.parentNode;
+  const bookToDelete = findBookInLibrary(bookToDeleteHtml.getAttribute("data"));
+  bookToDeleteHtml.parentNode.removeChild(bookToDeleteHtml);
+  myLibrary.splice(bookToDelete, 1);
 }
+
+const inputForm = (function () {
+  let form = document.getElementById("popUp");
+
+  function show() {
+    form.style.display = "flex";
+  }
+
+  function hide() {
+    form.style.display = "none";
+  }
+
+  function clear() {
+    form.reset();
+  }
+
+  function validate(e) {
+    e.preventDefault();
+    if (
+      document.querySelector("#title").value == "" ||
+      document.querySelector("#author").value == ""
+    ) {
+      alert("Please fill in all the book details.");
+      return false;
+    } else if (
+      isNaN(document.querySelector("#pages").value) ||
+      document.querySelector("#pages").value == ""
+    ) {
+      alert("Please use only numbers for the page-input.");
+      return false;
+    } else {
+      return true;
+    }
+  }
+
+  return {
+    show,
+    hide,
+    clear,
+    validate,
+  };
+})();
 
 function displayBooks() {
   const main = document.querySelector("main");
@@ -77,63 +136,15 @@ function displayBooks() {
   main.appendChild(bookContainer);
 }
 
-function changeReadStatusOfBook(e) {
-  const readStatusElement = e.target.previousElementSibling;
-  const bookToChangeReadStatusReference =
-    e.target.parentNode.parentNode.getAttribute("data");
-  for (let book in myLibrary) {
-    if (myLibrary[book].bookReference == bookToChangeReadStatusReference) {
-      if (myLibrary[book].readStatus == "yes") {
-        myLibrary[book].readStatus = "no";
-        readStatusElement.textContent = "Read: no";
-      } else {
-        myLibrary[book].readStatus = "yes";
-        readStatusElement.textContent = "Read: yes";
-      }
-    }
-  }
-}
-
-function deleteBook(e) {
-  const bookToDelete = e.target.parentNode;
-  const bookToDeleteReference = bookToDelete.getAttribute("data");
-  let bookPositionInLibrary = 0;
-  bookToDelete.parentNode.removeChild(bookToDelete);
-  for (let book in myLibrary) {
-    if (myLibrary[book].bookReference == bookToDeleteReference) {
-      myLibrary.splice(bookPositionInLibrary, 1);
-      return;
-    } else {
-      bookPositionInLibrary++;
-    }
-  }
-}
-
-function formValidation(e) {
-  e.preventDefault();
-  if (
-    document.querySelector("#title").value == "" ||
-    document.querySelector("#author").value == ""
-  ) {
-    alert("Please fill in all the book details.");
-    return false;
-  } else if (
-    isNaN(document.querySelector("#pages").value) ||
-    document.querySelector("#pages").value == ""
-  ) {
-    alert("Please use only numbers for the page-input.");
-    return false;
-  } else {
-    return true;
-  }
-}
-
 const btnAddBook = document.querySelector("#btnBook");
-btnAddBook.addEventListener("click", () => showInputForm());
+btnAddBook.addEventListener("click", () => inputForm.show());
 
 const btnSubmit = document.querySelector("#btnSubmit");
 btnSubmit.addEventListener("click", (e) => {
-  if (formValidation(e)) {
-    addBookToLibrary();
+  if (inputForm.validate(e)) {
+    createNewBook().addBookToLibrary();
+    inputForm.hide();
+    inputForm.clear();
+    displayBooks();
   }
 });

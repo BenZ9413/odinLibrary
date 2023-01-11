@@ -10,7 +10,7 @@ class Book {
       (this.readStatus = readStatus);
   }
 
-  addBookToLibrary = () => {
+  addToLibrary = () => {
     myLibrary.push(this);
   };
 }
@@ -142,7 +142,7 @@ btnAddBook.addEventListener("click", () => inputForm.show());
 const btnSubmit = document.querySelector("#btnSubmit");
 btnSubmit.addEventListener("click", (e) => {
   if (inputForm.validate(e)) {
-    createNewBook().addBookToLibrary();
+    createNewBook().addToLibrary();
     inputForm.hide();
     inputForm.clear();
     displayBooks();

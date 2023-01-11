@@ -13,6 +13,10 @@ class Book {
   addToLibrary = () => {
     myLibrary.push(this);
   };
+
+  //changeReadStatus = () => {}
+
+  //delete = () => {}
 }
 
 function createNewBook() {
